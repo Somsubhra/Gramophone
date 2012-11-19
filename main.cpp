@@ -1,6 +1,6 @@
 #include <QtGui>
 
-#include "Gramophone.h"
+#include "gramophone.h"
 
 int main(int argv, char **args)
 {

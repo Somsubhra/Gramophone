@@ -1,5 +1,5 @@
 #include <QtGui>
-#include "Gramophone.h"
+#include "gramophone.h"
 
 Gramophone::Gramophone()
 {
