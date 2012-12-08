@@ -297,6 +297,10 @@ void Gramophone::setupMenus()
     playbackMenu->addSeparator();
     playbackMenu->addAction(toggleTimeLCDAction);
 
+    QMenu *audioMenu = menuBar()->addMenu(tr("&Audio"));
+
+    QMenu *videoMenu = menuBar()->addMenu(tr("&Video"));
+
     QMenu *aboutMenu = menuBar()->addMenu(tr("&Help"));
     aboutMenu->addAction(aboutAction);
     aboutMenu->addAction(aboutQtAction);
