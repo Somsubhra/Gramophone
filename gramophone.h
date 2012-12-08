@@ -41,6 +41,8 @@ private slots:
     void backward();
     void gototime();
     void play();
+    void toggleTimeLCD();
+
 
 
 private:
@@ -67,9 +69,12 @@ private:
     QAction *backwardAction;
     QAction *gototimeAction;
     QAction *toggleAction;
+    QAction *fullScreenAction;
+    QAction *toggleTimeLCDAction;
 
     QLCDNumber *timeLcd;
     QTableWidget *musicTable;
+    bool timeRemaining;
 };
 
 #endif

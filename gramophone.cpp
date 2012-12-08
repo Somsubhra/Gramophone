@@ -22,13 +22,18 @@ Gramophone::Gramophone()
 
 
     Phonon::createPath(mediaObject, audioOutput);
+
+
     Phonon::createPath(mediaObject, videoWidget);
 
     setupActions();
     setupMenus();
     setupUi();
     timeLcd->display("00:00");
+    timeRemaining = false;
 }
+
+
 
 void Gramophone::addFiles()
 {
@@ -119,6 +124,10 @@ void Gramophone::stateChanged(Phonon::State newState, Phonon::State /* oldState 
 
 void Gramophone::tick(qint64 time)
 {
+    if(timeRemaining){
+        time = mediaObject->totalTime()-time;
+    }
+
     QTime displayTime(0, (time / 60000) % 60, (time / 1000) % 60);
 
     timeLcd->display(displayTime.toString("mm:ss"));
@@ -249,7 +258,11 @@ void Gramophone::setupActions()
     toggleAction = new QAction(style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
     toggleAction->setShortcut(tr("Ctrl+P"));
     toggleAction->setDisabled(true);
+    toggleTimeLCDAction = new QAction(tr("Time remaining"), this);
+    fullScreenAction = new QAction(style()->standardIcon(QStyle::SP_DesktopIcon), tr("Full Screen"), this);
 
+
+    connect(fullScreenAction, SIGNAL(triggered()), videoWidget, SLOT(enterFullScreen()));
     connect(toggleAction, SIGNAL(triggered()), this, SLOT(play()));
     connect(stopAction, SIGNAL(triggered()), mediaObject, SLOT(stop()));
     connect(addFilesAction, SIGNAL(triggered()), this, SLOT(addFiles()));
@@ -261,7 +274,7 @@ void Gramophone::setupActions()
     connect(forwardAction, SIGNAL(triggered()), this, SLOT(forward()));
     connect(backwardAction, SIGNAL(triggered()), this, SLOT(backward()));
     connect(gototimeAction, SIGNAL(triggered()), this, SLOT(gototime()));
-
+    connect(toggleTimeLCDAction, SIGNAL(triggered()), this, SLOT(toggleTimeLCD()));
 }
 
 void Gramophone::setupMenus()
@@ -281,6 +294,8 @@ void Gramophone::setupMenus()
     playbackMenu->addAction(stopAction);
     playbackMenu->addAction(previousAction);
     playbackMenu->addAction(nextAction);
+    playbackMenu->addSeparator();
+    playbackMenu->addAction(toggleTimeLCDAction);
 
     QMenu *aboutMenu = menuBar()->addMenu(tr("&Help"));
     aboutMenu->addAction(aboutAction);
@@ -291,15 +306,20 @@ void Gramophone::setupUi()
 {
     QToolBar *bar = new QToolBar;
 
-    bar->addAction(toggleAction);
-    bar->addAction(backwardAction);
     bar->addAction(previousAction);
-    bar->addAction(stopAction);
-    bar->addAction(nextAction);
+    bar->addAction(backwardAction);
+    bar->addAction(toggleAction);
     bar->addAction(forwardAction);
+    bar->addAction(nextAction);
+
+    bar->addAction(stopAction);
+    bar->addSeparator();
+    bar->addAction(fullScreenAction);
+
 
     QToolBar *mediaBar = new QToolBar;
     mediaBar->addAction(addFilesAction);
+
 
 
     seekSlider = new Phonon::SeekSlider(this);
@@ -313,7 +333,7 @@ void Gramophone::setupUi()
     volumeLabel->setPixmap(QPixmap("images/volume.png"));
 
     QPalette palette;
-    palette.setBrush(QPalette::Light, Qt::darkGray);
+    palette.setBrush(QPalette::Light, Qt::black);
 
     timeLcd = new QLCDNumber;
     timeLcd->setPalette(palette);
@@ -341,6 +361,7 @@ void Gramophone::setupUi()
     playbackLayout->addWidget(volumeSlider);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
+
     mainLayout->addWidget(videoWidget);
     mainLayout->addWidget(musicTable);
     mainLayout->addLayout(seekerLayout);
@@ -435,4 +456,16 @@ void Gramophone::play(){
     else{
         mediaObject->pause();
     }
+}
+
+void Gramophone::toggleTimeLCD(){
+    timeRemaining = !(timeRemaining);
+
+    if(timeRemaining){
+        toggleTimeLCDAction->setText(tr("Time elapsed"));
+    }
+    else{
+        toggleTimeLCDAction->setText(tr("Time remaining"));
+    }
+
 }
