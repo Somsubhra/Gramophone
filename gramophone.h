@@ -42,7 +42,7 @@ private slots:
     void gototime();
     void play();
     void toggleTimeLCD();
-
+    void setAspectRatio();
 
 
 private:
@@ -71,6 +71,11 @@ private:
     QAction *toggleAction;
     QAction *fullScreenAction;
     QAction *toggleTimeLCDAction;
+    QAction *aspectRatioAutoAction;
+    QAction *aspectRatioVariableAction;
+    QAction *aspectRatio16_9Action;
+    QAction *aspectRatio4_3Action;
+
 
     QLCDNumber *timeLcd;
     QTableWidget *musicTable;

@@ -7,7 +7,6 @@ Gramophone::Gramophone()
     mediaObject = new Phonon::MediaObject(this);
     videoWidget = new Phonon::VideoWidget(this);
 
-
     metaInformationResolver = new Phonon::MediaObject(this);
     mediaObject->setTickInterval(1000);
 
@@ -20,10 +19,7 @@ Gramophone::Gramophone()
             this, SLOT(sourceChanged(Phonon::MediaSource)));
     connect(mediaObject, SIGNAL(aboutToFinish()), this, SLOT(aboutToFinish()));
 
-
     Phonon::createPath(mediaObject, audioOutput);
-
-
     Phonon::createPath(mediaObject, videoWidget);
 
     setupActions();
@@ -260,6 +256,14 @@ void Gramophone::setupActions()
     toggleAction->setDisabled(true);
     toggleTimeLCDAction = new QAction(tr("Time remaining"), this);
     fullScreenAction = new QAction(style()->standardIcon(QStyle::SP_DesktopIcon), tr("Full Screen"), this);
+    aspectRatioAutoAction = new QAction(tr("Auto"), this);
+    aspectRatioAutoAction->setCheckable(true);
+    aspectRatioVariableAction = new QAction(tr("Variable"), this);
+    aspectRatioVariableAction->setCheckable(true);
+    aspectRatio16_9Action = new QAction(tr("16:9"), this);
+    aspectRatio16_9Action->setCheckable(true);
+    aspectRatio4_3Action = new QAction(tr("4:3"), this);
+    aspectRatio4_3Action->setCheckable(true);
 
 
     connect(fullScreenAction, SIGNAL(triggered()), videoWidget, SLOT(enterFullScreen()));
@@ -275,6 +279,11 @@ void Gramophone::setupActions()
     connect(backwardAction, SIGNAL(triggered()), this, SLOT(backward()));
     connect(gototimeAction, SIGNAL(triggered()), this, SLOT(gototime()));
     connect(toggleTimeLCDAction, SIGNAL(triggered()), this, SLOT(toggleTimeLCD()));
+    connect(aspectRatioAutoAction, SIGNAL(triggered()), this, SLOT(setAspectRatio()));
+    connect(aspectRatioVariableAction, SIGNAL(triggered()), this, SLOT(setAspectRatio()));
+    connect(aspectRatio16_9Action, SIGNAL(triggered()), this, SLOT(setAspectRatio()));
+    connect(aspectRatio4_3Action, SIGNAL(triggered()), this, SLOT(setAspectRatio()));
+
 }
 
 void Gramophone::setupMenus()
@@ -299,7 +308,19 @@ void Gramophone::setupMenus()
 
     QMenu *audioMenu = menuBar()->addMenu(tr("&Audio"));
 
+
     QMenu *videoMenu = menuBar()->addMenu(tr("&Video"));
+    QActionGroup *aspectRatioActionGroup = new QActionGroup(this);
+    aspectRatioActionGroup->addAction(aspectRatioAutoAction);
+    aspectRatioActionGroup->addAction(aspectRatioVariableAction);
+    aspectRatioActionGroup->addAction(aspectRatio16_9Action);
+    aspectRatioActionGroup->addAction(aspectRatio4_3Action);
+    aspectRatioAutoAction->setChecked(true);
+    QMenu *aspectRatioMenu = videoMenu->addMenu(tr("Aspect Ratio"));
+    aspectRatioMenu->addAction(aspectRatioAutoAction);
+    aspectRatioMenu->addAction(aspectRatioVariableAction);
+    aspectRatioMenu->addAction(aspectRatio16_9Action);
+    aspectRatioMenu->addAction(aspectRatio4_3Action);
 
     QMenu *aboutMenu = menuBar()->addMenu(tr("&Help"));
     aboutMenu->addAction(aboutAction);
@@ -472,4 +493,22 @@ void Gramophone::toggleTimeLCD(){
         toggleTimeLCDAction->setText(tr("Time remaining"));
     }
 
+}
+
+void Gramophone::setAspectRatio(){
+    if(aspectRatioAutoAction->isChecked()){
+        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatioAuto);
+    }
+    else if(aspectRatioVariableAction->isChecked()){
+        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatioWidget);
+    }
+    else if(aspectRatio16_9Action->isChecked()){
+        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio16_9);
+    }
+    else if(aspectRatio4_3Action->isChecked()){
+        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio4_3);
+    }
+    else{
+        return;
+    }
 }
