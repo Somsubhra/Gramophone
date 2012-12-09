@@ -46,6 +46,10 @@ private slots:
     void setMuted(bool mute);
     void increaseVolume();
     void decreaseVolume();
+    void toggleFullScreen(bool fullScreen);
+    void setVolume();
+    void setBrightness();
+    void setContrast();
 
 
 private:
@@ -72,7 +76,7 @@ private:
     QAction *backwardAction;
     QAction *gototimeAction;
     QAction *toggleAction;
-    QAction *fullScreenAction;
+    QAction *toggleFullScreenAction;
     QAction *toggleTimeLCDAction;
     QAction *aspectRatioAutoAction;
     QAction *aspectRatioVariableAction;
@@ -81,6 +85,9 @@ private:
     QAction *muteAction;
     QAction *increaseVolumeAction;
     QAction *decreaseVolumeAction;
+    QAction *setVolumeAction;
+    QAction *setBrightnessAction;
+    QAction *setContrastAction;
 
     QLCDNumber *timeLcd;
     QTableWidget *musicTable;

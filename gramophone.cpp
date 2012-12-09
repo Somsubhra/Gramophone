@@ -228,48 +228,82 @@ void Gramophone::setupActions()
     stopAction = new QAction(style()->standardIcon(QStyle::SP_MediaStop), tr("Stop"), this);
     stopAction->setShortcut(tr("Ctrl+S"));
     stopAction->setDisabled(true);
+
     nextAction = new QAction(style()->standardIcon(QStyle::SP_MediaSkipForward), tr("Next Media"), this);
     nextAction->setShortcut(tr("Ctrl+N"));
     nextAction->setDisabled(true);
+
     previousAction = new QAction(style()->standardIcon(QStyle::SP_MediaSkipBackward), tr("Previous Media"), this);
     previousAction->setShortcut(tr("Ctrl+R"));
     previousAction->setDisabled(true);
+
     addFilesAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogStart),tr("Add &Media"), this);
     addFilesAction->setShortcut(tr("Ctrl+M"));
+
     exitAction = new QAction(tr("E&xit"), this);
     exitAction->setShortcuts(QKeySequence::Quit);
+
     aboutAction = new QAction(tr("A&bout"), this);
     aboutAction->setShortcut(tr("Ctrl+A"));
+
     aboutQtAction = new QAction(tr("About &Qt"), this);
     aboutQtAction->setShortcut(tr("Ctrl+Q"));
+
     forwardAction = new QAction(style()->standardIcon(QStyle::SP_MediaSeekForward), tr("Seek Forward"), this);
     forwardAction->setShortcut(tr("Ctrl+F"));
     forwardAction->setDisabled(true);
+
     backwardAction = new QAction(style()->standardIcon(QStyle::SP_MediaSeekBackward), tr("Seek Backward"), this);
     backwardAction->setShortcut(tr("Ctrl+B"));
     backwardAction->setDisabled(true);
+
     gototimeAction = new QAction(tr("Jump to time"), this);
     gototimeAction->setShortcut(tr("Ctrl+J"));
     gototimeAction->setDisabled(true);
+
     toggleAction = new QAction(style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
     toggleAction->setShortcut(tr("Ctrl+P"));
     toggleAction->setDisabled(true);
+
     toggleTimeLCDAction = new QAction(tr("Time remaining"), this);
-    fullScreenAction = new QAction(style()->standardIcon(QStyle::SP_DesktopIcon), tr("Full Screen"), this);
+    toggleTimeLCDAction->setShortcut(tr("Ctrl+Shift+T"));
+
+    toggleFullScreenAction = new QAction(style()->standardIcon(QStyle::SP_DesktopIcon), tr("Full Screen"), this);
+    toggleFullScreenAction->setCheckable(true);
+    toggleFullScreenAction->setShortcut(tr("Ctrl+Return"));
+
     aspectRatioAutoAction = new QAction(tr("Auto"), this);
     aspectRatioAutoAction->setCheckable(true);
+
     aspectRatioVariableAction = new QAction(tr("Variable"), this);
     aspectRatioVariableAction->setCheckable(true);
+
     aspectRatio16_9Action = new QAction(tr("16:9"), this);
     aspectRatio16_9Action->setCheckable(true);
+
     aspectRatio4_3Action = new QAction(tr("4:3"), this);
     aspectRatio4_3Action->setCheckable(true);
-    muteAction = new QAction(style()->standardIcon(QStyle::SP_MediaVolumeMuted), tr("Mute"), this);
-    muteAction->setCheckable(true);
-    increaseVolumeAction = new QAction(tr("Increase Volume"), this);
-    decreaseVolumeAction = new QAction(tr("Decrease Volume"), this);
 
-    connect(fullScreenAction, SIGNAL(triggered()), videoWidget, SLOT(enterFullScreen()));
+    muteAction = new QAction(style()->standardIcon(QStyle::SP_MediaVolumeMuted), tr("Mute"), this);
+    muteAction->setShortcut(tr("Ctrl+Shift+M"));
+    muteAction->setCheckable(true);
+
+    increaseVolumeAction = new QAction(tr("Increase Volume"), this);
+    increaseVolumeAction->setShortcut(tr("Ctrl++"));
+
+    decreaseVolumeAction = new QAction(tr("Decrease Volume"), this);
+    decreaseVolumeAction->setShortcut(tr("Ctrl+-"));
+
+    setVolumeAction = new QAction(style()->standardIcon(QStyle::SP_MediaVolume), tr("Set Volume"), this);
+    setVolumeAction->setShortcut(tr("Ctrl+V"));
+
+    setBrightnessAction = new QAction(tr("Set Brightness"), this);
+    setBrightnessAction->setShortcut(tr("Ctrl+Shift+B"));
+
+    setContrastAction = new QAction(tr("Set Contrast"), this);
+    setContrastAction->setShortcut(tr("Ctrl+Shift+C"));
+
+    connect(toggleFullScreenAction, SIGNAL(toggled(bool)), this, SLOT(toggleFullScreen(bool)));
     connect(toggleAction, SIGNAL(triggered()), this, SLOT(play()));
     connect(stopAction, SIGNAL(triggered()), mediaObject, SLOT(stop()));
     connect(addFilesAction, SIGNAL(triggered()), this, SLOT(addFiles()));
@@ -289,6 +323,9 @@ void Gramophone::setupActions()
     connect(muteAction, SIGNAL(toggled(bool)), this, SLOT(setMuted(bool)));
     connect(increaseVolumeAction, SIGNAL(triggered()), this, SLOT(increaseVolume()));
     connect(decreaseVolumeAction, SIGNAL(triggered()), this, SLOT(decreaseVolume()));
+    connect(setVolumeAction, SIGNAL(triggered()), this, SLOT(setVolume()));
+    connect(setBrightnessAction, SIGNAL(triggered()), this, SLOT(setBrightness()));
+    connect(setContrastAction, SIGNAL(triggered()), this, SLOT(setContrast()));
 }
 
 void Gramophone::setupMenus()
@@ -315,8 +352,11 @@ void Gramophone::setupMenus()
     audioMenu->addAction(muteAction);
     audioMenu->addAction(increaseVolumeAction);
     audioMenu->addAction(decreaseVolumeAction);
+    audioMenu->addAction(setVolumeAction);
 
     QMenu *videoMenu = menuBar()->addMenu(tr("&Video"));
+    videoMenu->addAction(toggleFullScreenAction);
+    videoMenu->addSeparator();
     QActionGroup *aspectRatioActionGroup = new QActionGroup(this);
     aspectRatioActionGroup->addAction(aspectRatioAutoAction);
     aspectRatioActionGroup->addAction(aspectRatioVariableAction);
@@ -328,6 +368,9 @@ void Gramophone::setupMenus()
     aspectRatioMenu->addAction(aspectRatioVariableAction);
     aspectRatioMenu->addAction(aspectRatio16_9Action);
     aspectRatioMenu->addAction(aspectRatio4_3Action);
+    videoMenu->addSeparator();
+    videoMenu->addAction(setBrightnessAction);
+    videoMenu->addAction(setContrastAction);
 
     QMenu *aboutMenu = menuBar()->addMenu(tr("&Help"));
     aboutMenu->addAction(aboutAction);
@@ -346,7 +389,7 @@ void Gramophone::setupUi()
 
     bar->addAction(stopAction);
     bar->addSeparator();
-    bar->addAction(fullScreenAction);
+    bar->addAction(toggleFullScreenAction);
 
 
     QToolBar *mediaBar = new QToolBar;
@@ -537,4 +580,31 @@ void Gramophone::decreaseVolume(){
     audioOutput->setVolume(audioOutput->volume()-0.1);
 }
 
+void Gramophone::toggleFullScreen(bool fullScreen){
+    if(fullScreen){
+        videoWidget->enterFullScreen();
+    }
+    else{
+        videoWidget->exitFullScreen();
+    }
+}
 
+void Gramophone::setVolume(){
+    qreal volume = (qreal)(QInputDialog::getInt(this, "Set Volume", "Set Volume(from 1 to 100)",0,0,100))/100.0;
+    audioOutput->setVolume(volume);
+}
+
+void Gramophone::setBrightness(){
+    QDialog* w = new QDialog;
+    //w->setMaximumSize(400,40);
+    QSlider *slider = new QSlider(w);
+    QHBoxLayout *lay = new QHBoxLayout;
+    lay->addWidget(slider);
+    w->setLayout(lay);
+    w->show();
+
+}
+
+void Gramophone::setContrast(){
+
+}
