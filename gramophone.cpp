@@ -264,7 +264,10 @@ void Gramophone::setupActions()
     aspectRatio16_9Action->setCheckable(true);
     aspectRatio4_3Action = new QAction(tr("4:3"), this);
     aspectRatio4_3Action->setCheckable(true);
-
+    muteAction = new QAction(style()->standardIcon(QStyle::SP_MediaVolumeMuted), tr("Mute"), this);
+    muteAction->setCheckable(true);
+    increaseVolumeAction = new QAction(tr("Increase Volume"), this);
+    decreaseVolumeAction = new QAction(tr("Decrease Volume"), this);
 
     connect(fullScreenAction, SIGNAL(triggered()), videoWidget, SLOT(enterFullScreen()));
     connect(toggleAction, SIGNAL(triggered()), this, SLOT(play()));
@@ -283,7 +286,9 @@ void Gramophone::setupActions()
     connect(aspectRatioVariableAction, SIGNAL(triggered()), this, SLOT(setAspectRatio()));
     connect(aspectRatio16_9Action, SIGNAL(triggered()), this, SLOT(setAspectRatio()));
     connect(aspectRatio4_3Action, SIGNAL(triggered()), this, SLOT(setAspectRatio()));
-
+    connect(muteAction, SIGNAL(toggled(bool)), this, SLOT(setMuted(bool)));
+    connect(increaseVolumeAction, SIGNAL(triggered()), this, SLOT(increaseVolume()));
+    connect(decreaseVolumeAction, SIGNAL(triggered()), this, SLOT(decreaseVolume()));
 }
 
 void Gramophone::setupMenus()
@@ -307,7 +312,9 @@ void Gramophone::setupMenus()
     playbackMenu->addAction(toggleTimeLCDAction);
 
     QMenu *audioMenu = menuBar()->addMenu(tr("&Audio"));
-
+    audioMenu->addAction(muteAction);
+    audioMenu->addAction(increaseVolumeAction);
+    audioMenu->addAction(decreaseVolumeAction);
 
     QMenu *videoMenu = menuBar()->addMenu(tr("&Video"));
     QActionGroup *aspectRatioActionGroup = new QActionGroup(this);
@@ -512,3 +519,22 @@ void Gramophone::setAspectRatio(){
         return;
     }
 }
+
+void Gramophone::setMuted(bool mute){
+    if(mute){
+        audioOutput->setMuted(true);
+    }
+    else{
+        audioOutput->setMuted(false);
+    }
+}
+
+void Gramophone::increaseVolume(){
+    audioOutput->setVolume(audioOutput->volume()+0.1);
+}
+
+void Gramophone::decreaseVolume(){
+    audioOutput->setVolume(audioOutput->volume()-0.1);
+}
+
+

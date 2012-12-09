@@ -43,6 +43,9 @@ private slots:
     void play();
     void toggleTimeLCD();
     void setAspectRatio();
+    void setMuted(bool mute);
+    void increaseVolume();
+    void decreaseVolume();
 
 
 private:
@@ -75,7 +78,9 @@ private:
     QAction *aspectRatioVariableAction;
     QAction *aspectRatio16_9Action;
     QAction *aspectRatio4_3Action;
-
+    QAction *muteAction;
+    QAction *increaseVolumeAction;
+    QAction *decreaseVolumeAction;
 
     QLCDNumber *timeLcd;
     QTableWidget *musicTable;
