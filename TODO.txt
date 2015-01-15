@@ -1,4 +1,0 @@
-Add the loop one/loop all
-Add delete from playlist
-Add slower and faster
-mute and fullscreen bugs

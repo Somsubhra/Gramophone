@@ -1,21 +1,12 @@
+QT += widgets
+
 SOURCES += \
-    gramophone.cpp \
-    main.cpp
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/actioncollection.cpp \
+    src/standardactions.cpp
 
 HEADERS += \
-    gramophone.h
-
-
-
-QT += phonon
-
-OTHER_FILES += \
-    TODO.txt \
-    README.txt
-
-
-
-
-
-
-
+    src/mainwindow.h \
+    src/actioncollection.h \
+    src/standardactions.h
