@@ -9,7 +9,7 @@ PlaybackPanel::PlaybackPanel(MainWindow* mainWindow, QWidget *parent) :
 {
     m_mainWindow = mainWindow;
 
-    this->setMaximumHeight(50);
+    this->setMaximumHeight(70);
 
     QGridLayout* mainLayout = new QGridLayout(this);
 

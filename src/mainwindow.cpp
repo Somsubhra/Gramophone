@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     this->setWindowTitle(tr("Gramophone"));
     this->setWindowState(Qt::WindowMaximized);
+    this->setMinimumSize(400, 300);
 
     m_actionCollection = new ActionCollection(this);
 
