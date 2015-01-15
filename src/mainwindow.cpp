@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->createMenuBar();
 
     QWidget* mainWidget = new QWidget(this);
-    QGridLayout* mainLayout = new QGridLayout(this);
+    QGridLayout* mainLayout = new QGridLayout(mainWidget);
 
     m_videoWidget = new VideoWidget(mainWidget);
     mainLayout->addWidget(m_videoWidget, 0, 0);
