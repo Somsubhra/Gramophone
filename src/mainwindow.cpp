@@ -36,6 +36,26 @@ void MainWindow::createMenuBar()
     playbackMenu->addAction(m_actionCollection->action("jump_backward"));
     playbackMenu->addAction(m_actionCollection->action("jump_forward"));
     playbackMenu->addAction(m_actionCollection->action("jump_to_time"));
+
+    // Audio menu
+    QMenu* audioMenu = this->menuBar()->addMenu(tr("Audio"));
+    audioMenu->addAction(m_actionCollection->action("incr_volume"));
+    audioMenu->addAction(m_actionCollection->action("decr_volume"));
+    audioMenu->addAction(m_actionCollection->action("mute"));
+
+    // Video menu
+    QMenu* videoMenu = this->menuBar()->addMenu(tr("Video"));
+    videoMenu->addAction(m_actionCollection->action("full_screen"));
+
+    // View menu
+    QMenu* viewMenu = this->menuBar()->addMenu(tr("View"));
+    viewMenu->addAction(m_actionCollection->action("playlist"));
+
+    // Help menu
+    QMenu* helpMenu = this->menuBar()->addMenu(tr("Help"));
+    helpMenu->addAction(m_actionCollection->action("help"));
+    helpMenu->addSeparator();
+    helpMenu->addAction(m_actionCollection->action("about"));
 }
 
 ActionCollection* MainWindow::actionCollection()
