@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     m_standardActions->createStandardActions();
 
     this->createMenuBar();
+
+    m_videoWidget = new VideoWidget(this);
+    this->setCentralWidget(m_videoWidget);
 }
 
 void MainWindow::createMenuBar()

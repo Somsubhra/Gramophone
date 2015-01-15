@@ -5,6 +5,7 @@
 
 #include "actioncollection.h"
 #include "standardactions.h"
+#include "videowidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -24,6 +25,7 @@ public slots:
 private:
     ActionCollection* m_actionCollection;
     StandardActions* m_standardActions;
+    VideoWidget* m_videoWidget;
 };
 
 #endif // MAINWINDOW_H
