@@ -19,8 +19,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget* mainWidget = new QWidget(this);
     QGridLayout* mainLayout = new QGridLayout(mainWidget);
 
-    m_videoWidget = new VideoWidget(mainWidget);
+    m_videoWidget = new VideoWidget(this, mainWidget);
     mainLayout->addWidget(m_videoWidget, 0, 0);
+
+    m_playbackPanel = new PlaybackPanel(this, mainWidget);
+    mainLayout->addWidget(m_playbackPanel, 1, 0);
 
     mainWidget->setLayout(mainLayout);
     this->setCentralWidget(mainWidget);

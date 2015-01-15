@@ -6,6 +6,7 @@
 #include "actioncollection.h"
 #include "standardactions.h"
 #include "videowidget.h"
+#include "playbackpanel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -26,6 +27,7 @@ private:
     ActionCollection* m_actionCollection;
     StandardActions* m_standardActions;
     VideoWidget* m_videoWidget;
+    PlaybackPanel* m_playbackPanel;
 };
 
 #endif // MAINWINDOW_H
