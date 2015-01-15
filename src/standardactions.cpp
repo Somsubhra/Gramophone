@@ -1,6 +1,7 @@
 #include "standardactions.h"
 
 #include <QAction>
+#include <QStyle>
 
 #include "mainwindow.h"
 
@@ -19,36 +20,44 @@ void StandardActions::createStandardActions()
     m_mainWindow->actionCollection()->addAction("exit", exitAction);
 
     // Open action
-    QAction* openAction = new QAction(tr("Open"), m_mainWindow);
+    QAction* openAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_DirOpenIcon),
+                                      tr("Open"), m_mainWindow);
     openAction->setShortcut(QKeySequence("Ctrl+O"));
     m_mainWindow->actionCollection()->addAction("open", openAction);
 
     // Play action
-    QAction* playAction = new QAction(tr("Play"), m_mainWindow);
+    QAction* playAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaPlay),
+                tr("Play"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("play", playAction);
 
     // Pause action
-    QAction* pauseAction = new QAction(tr("Pause"), m_mainWindow);
+    QAction* pauseAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaPause),
+                                       tr("Pause"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("pause", pauseAction);
 
     // Stop action
-    QAction* stopAction = new QAction(tr("Stop"), m_mainWindow);
+    QAction* stopAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaStop),
+                                      tr("Stop"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("stop", stopAction);
 
     // Previous media action
-    QAction* prevAction = new QAction(tr("Previous"), m_mainWindow);
+    QAction* prevAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaSkipBackward),
+                                      tr("Previous"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("prev", prevAction);
 
     // Next media action
-    QAction* nextAction = new QAction(tr("Next"), m_mainWindow);
+    QAction* nextAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaSkipForward),
+                                      tr("Next"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("next", nextAction);
 
     // Jump forward action
-    QAction* jumpForwardAction = new QAction(tr("Jump Forward"), m_mainWindow);
+    QAction* jumpForwardAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaSeekForward),
+                                             tr("Jump Forward"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("jump_forward", jumpForwardAction);
 
     // Jump backward action
-    QAction* jumpBackwardAction = new QAction(tr("Jump Backward"), m_mainWindow);
+    QAction* jumpBackwardAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaSeekBackward),
+                                              tr("Jump Backward"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("jump_backward", jumpBackwardAction);
 
     // Jump to time action
@@ -57,15 +66,18 @@ void StandardActions::createStandardActions()
     m_mainWindow->actionCollection()->addAction("jump_to_time", jumpToTimeAction);
 
     // Increase volume action
-    QAction* incrVolumeAction = new QAction(tr("Increase Volume"), m_mainWindow);
+    QAction* incrVolumeAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaVolume),
+                                            tr("Increase Volume"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("incr_volume", incrVolumeAction);
 
     // Decrease volume action
-    QAction* decrVolumeAction = new QAction(tr("Decrease Volume"), m_mainWindow);
+    QAction* decrVolumeAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaVolume),
+                                            tr("Decrease Volume"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("decr_volume", decrVolumeAction);
 
     // Mute action
-    QAction* muteAction = new QAction(tr("Mute"), m_mainWindow);
+    QAction* muteAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_MediaVolumeMuted),
+                                      tr("Mute"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("mute", muteAction);
 
     // Full screen toggle action
@@ -80,7 +92,8 @@ void StandardActions::createStandardActions()
     m_mainWindow->actionCollection()->addAction("playlist", playlistAction);
 
     // Help action
-    QAction* helpAction = new QAction(tr("Help"), m_mainWindow);
+    QAction* helpAction = new QAction(m_mainWindow->style()->standardIcon(QStyle::SP_DialogHelpButton),
+                                      tr("Help"), m_mainWindow);
     m_mainWindow->actionCollection()->addAction("help", helpAction);
 
     // About action
