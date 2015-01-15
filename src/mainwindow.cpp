@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <QMenuBar>
+#include <QGridLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -15,8 +16,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->createMenuBar();
 
-    m_videoWidget = new VideoWidget(this);
-    this->setCentralWidget(m_videoWidget);
+    QWidget* mainWidget = new QWidget(this);
+    QGridLayout* mainLayout = new QGridLayout(this);
+
+    m_videoWidget = new VideoWidget(mainWidget);
+    mainLayout->addWidget(m_videoWidget, 0, 0);
+
+    mainWidget->setLayout(mainLayout);
+    this->setCentralWidget(mainWidget);
 }
 
 void MainWindow::createMenuBar()
