@@ -14,6 +14,30 @@ public:
 signals:
 
 public slots:
+    void slotExit();
+    void slotOpen();
+
+    void slotPlay();
+    void slotPause();
+    void slotStop();
+
+    void slotPrevMedia();
+    void slotNextMedia();
+
+    void slotJumpForward();
+    void slotJumpBackward();
+    void slotJumpToTime();
+
+    void slotIncrVolume();
+    void slotDecrVolume();
+    void slotMute();
+
+    void slotFullScreenToggle();
+
+    void slotPlaylist();
+
+    void slotHelp();
+    void slotAbout();
 
 private:
     MainWindow* m_mainWindow;
