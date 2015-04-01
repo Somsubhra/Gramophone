@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "actionhandlers.h"
+
 class MainWindow;
 
 class StandardActions : public QObject
@@ -19,7 +21,7 @@ public slots:
 
 private:
     MainWindow* m_mainWindow;
-
+    ActionHandlers* m_actionHandlers;
 };
 
 #endif // STANDARDACTIONS_H

@@ -9,6 +9,7 @@ StandardActions::StandardActions(MainWindow* mainWindow, QObject* parent) :
     QObject(parent)
 {
     m_mainWindow = mainWindow;
+    m_actionHandlers = new ActionHandlers(mainWindow, this);
 }
 
 void StandardActions::createStandardActions()
