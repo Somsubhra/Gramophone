@@ -83,3 +83,8 @@ VideoWidget* MainWindow::videoWidget()
 {
     return m_videoWidget;
 }
+
+MediaPlayer* MainWindow::player()
+{
+    return m_mediaPlayer;
+}

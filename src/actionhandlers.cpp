@@ -26,6 +26,8 @@ void ActionHandlers::slotOpen()
                                                          tr("Select Media Files to play"),
                                                          mediaDir,
                                                          filter);
+
+    m_mainWindow->player()->playLocalFile(QUrl::fromLocalFile(fileList.at(0)));
 }
 
 void ActionHandlers::slotPlay()
