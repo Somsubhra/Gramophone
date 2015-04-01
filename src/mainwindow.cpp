@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mainWidget->setLayout(mainLayout);
     this->setCentralWidget(mainWidget);
+
+    m_mediaPlayer = new MediaPlayer(this);
 }
 
 void MainWindow::createMenuBar()
@@ -75,4 +77,9 @@ void MainWindow::createMenuBar()
 ActionCollection* MainWindow::actionCollection()
 {
     return m_actionCollection;
+}
+
+VideoWidget* MainWindow::videoWidget()
+{
+    return m_videoWidget;
 }

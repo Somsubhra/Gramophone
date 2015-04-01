@@ -10,7 +10,8 @@ SOURCES += \
     src/videowidget.cpp \
     src/playbackpanel.cpp \
     src/playbackbuttons.cpp \
-    src/actionhandlers.cpp
+    src/actionhandlers.cpp \
+    src/mediaplayer.cpp
 
 HEADERS += \
     src/mainwindow.h \
@@ -19,4 +20,5 @@ HEADERS += \
     src/videowidget.h \
     src/playbackpanel.h \
     src/playbackbuttons.h \
-    src/actionhandlers.h
+    src/actionhandlers.h \
+    src/mediaplayer.h

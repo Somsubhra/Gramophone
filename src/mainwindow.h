@@ -7,6 +7,7 @@
 #include "standardactions.h"
 #include "videowidget.h"
 #include "playbackpanel.h"
+#include "mediaplayer.h"
 
 class MainWindow : public QMainWindow
 {
@@ -15,6 +16,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
 
     ActionCollection* actionCollection();
+
+    VideoWidget* videoWidget();
 
 private:
     void createMenuBar();
@@ -28,6 +31,7 @@ private:
     StandardActions* m_standardActions;
     VideoWidget* m_videoWidget;
     PlaybackPanel* m_playbackPanel;
+    MediaPlayer* m_mediaPlayer;
 };
 
 #endif // MAINWINDOW_H
