@@ -10,7 +10,7 @@ ActionHandlers::ActionHandlers(MainWindow* mainWindow, QObject *parent) :
 
 void ActionHandlers::slotExit()
 {
-
+    m_mainWindow->close();
 }
 
 void ActionHandlers::slotOpen()
